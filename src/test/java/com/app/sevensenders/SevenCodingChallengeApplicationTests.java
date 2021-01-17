@@ -5,6 +5,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
+
 import com.app.sevensenders.constants.AppConstants;
+import com.app.sevensenders.implementation.ComicServiceImplementation;
+import com.app.sevensenders.models.Comic;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -27,6 +33,9 @@ class SevenCodingChallengeApplicationTests {
     private WebApplicationContext context;
     @Autowired
 	MockMvc buildMvCMock;
+    
+    @Autowired 
+    ComicServiceImplementation service;
 
     AppConstants appC;
 	    
@@ -86,6 +95,37 @@ class SevenCodingChallengeApplicationTests {
 			      .andExpect(status().isOk())
 				  .andExpect(jsonPath("$", hasSize(20)));
 			      
+	}
+	
+	//T5 - Service Layer
+	//Test if the service layer is returning an list of comics
+	@Test
+	void test_Service_Layer() throws Exception {		
+		AppConstants.XCDK_LINK="https://xkcd.com/info.0.json";
+		AppConstants.POORLY_RSS="http://feeds.feedburner.com/PoorlyDrawnLines.rss";
+		ArrayList<Comic> comics = service.retrieveComic();
+		assertEquals(comics.size(),20);	      
+	}
+	
+	//T6 - Service Layer
+	//Check if the array is sorted
+	@Test
+	void test_Result_Is_Sorted() throws Exception {		
+		AppConstants.XCDK_LINK="https://xkcd.com/info.0.json";
+		AppConstants.POORLY_RSS="http://feeds.feedburner.com/PoorlyDrawnLines.rss";
+		ArrayList<Comic> comics = service.retrieveComic();
+		assertEquals(true,isSortedByDate(comics,comics.size()));	      
+	}
+	
+	private boolean isSortedByDate(ArrayList<Comic> comics, int n) {
+			
+		 
+		  if (n == 1 || n == 0)
+	            return true;
+
+	      return comics.get(n - 1).getPublishingDate().getTime() <= comics.get(n - 2).getPublishingDate().getTime() 
+	          && isSortedByDate(comics, n - 1);
+
 	}
 
 }
