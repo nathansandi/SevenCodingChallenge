@@ -1,4 +1,4 @@
-# SevenCodingChallenge
+# Instructions to Run
 Coding Challenge - Seven Senders 
 
 This coding challenge was developed using SpringBot, version 2.4.2. 
