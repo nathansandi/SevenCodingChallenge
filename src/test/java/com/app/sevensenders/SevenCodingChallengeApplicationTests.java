@@ -30,7 +30,7 @@ class SevenCodingChallengeApplicationTests {
 
     AppConstants appC;
 	    
-	private static final String SERVICE_ENDPOINT = "http://localhost:8080/getComics";
+	private static final String SERVICE_ENDPOINT = "http://localhost:8080/";
 	
 	//Test and valid request
 	//T1 - Test a valid request 

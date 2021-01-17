@@ -22,7 +22,7 @@ public class ComicsController {
 	@Autowired 
 	private ComicService service;
 	
-	@RequestMapping("/getComics")
+	@RequestMapping("/")
 	@GetMapping
 	public ResponseEntity<Object> getComics() throws JSONException, IOException, IllegalArgumentException, FeedException{		
 				return new ResponseEntity<Object>(service.retrieveComic(), HttpStatus.OK);
