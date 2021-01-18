@@ -4,9 +4,7 @@ Coding Challenge - Seven Senders
 This coding challenge was developed using SpringBot, version 2.4.2. 
 
 Requirements to run: 
-Docker
-Maven
-JDK 1.8
+Docker, Maven and JDK 1.8
 
 **Run:**
 
